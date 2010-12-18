@@ -61,7 +61,7 @@ class Spotify
 
   def listen(m)
     urls = URI.extract(m.message, "http")
-    songs = urls.map { |url| 
+    urls.each do |url|
       if url =~ /http:\/\/open.spotify.com\/(.+)\// then
         case $1
           when 'track'
@@ -76,6 +76,6 @@ class Spotify
             m.reply "Spotify album: #{album.artist} - #{album.name} (#{album.released})"
         end
       end
-    }.compact
+    end # urls.each
   end # listen
 end # Spotify
