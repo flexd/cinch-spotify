@@ -61,8 +61,9 @@ class Spotify
 
   def listen(m)
     urls = URI.extract(m.message, "http")
+    # handle the urls
     urls.each do |url|
-      if url =~ /http:\/\/open.spotify.com\/(.+)\// then
+      if url =~ /^http:\/\/open\.spotify\.com\/(.+)\/.+$/ then
         case $1
           when 'track'
            puts "url: #{url.inspect}"
@@ -77,5 +78,19 @@ class Spotify
         end
       end
     end # urls.each
+    # annoying to do this twice, not very DRY
+    if m.message =~ /^spotify:(.+):.+$/ then
+      case $1
+        when 'track'
+         song = parse_track(m.message)
+         m.reply "Spotify song: #{song.artist} - #{song.album} (#{song.released}) - #{song.name} - ca. #{song.length} minutes long."
+        when 'artist'
+          artist = parse_artist(m.message)
+          m.reply "Spotify artist: #{artist.name}"
+        when 'album'
+          album = parse_album(m.message)
+          m.reply "Spotify album: #{album.artist} - #{album.name} (#{album.released})"
+      end
+    end
   end # listen
 end # Spotify
