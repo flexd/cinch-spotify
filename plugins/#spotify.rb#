@@ -1,4 +1,8 @@
-require 'open-uri'
+
+
+r:q:.q.q
+
+GjIxciequire 'open-uri'
 require 'cinch'
 require 'json'
 require 'pp' # We like pretty stuff!
